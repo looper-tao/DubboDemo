@@ -1,0 +1,38 @@
+spring:
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://101.200.59.148:3306/develop?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: '!@#456Poiuy'
+    type: com.zaxxer.hikari.HikariDataSource
+    hikari:
+      connection-timeout: 30000
+      auto-commit: true
+      max-lifetime: 1800000
+      pool-name: DatebookHikariCP
+      minimum-idle: 5
+      connection-test-query: SELECT 1
+      dle-timeout: 30000
+      maximum-pool-size: 15
+      connection-init-sql: "SET NAMES utf8mb4"
+logging:
+  level:
+    org:
+      springframework:
+        boot:
+          autoconfigure: ERROR
+server:
+  port: 8081
+dubbo:
+  application:
+    name: consumer-site
+  registry:
+    protocol: zookeeper
+    address: 127.0.0.1:2181
+#扫描注解包通过该设置将服务注册到zookeeper
+  scan:
+    base-packages: com.yeguxin.dubbo.service
