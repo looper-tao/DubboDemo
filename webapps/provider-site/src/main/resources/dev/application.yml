@@ -29,10 +29,9 @@ server:
   port: 8081
 dubbo:
   application:
-    name: consumer-site
+    name: provider-site # 提供方应用信息，用于计算依赖关系
   registry:
-    protocol: zookeeper
-    address: 127.0.0.1:2181
-#扫描注解包通过该设置将服务注册到zookeeper
+    protocol: zookeeper  # 使用zookeeper广播注册中心暴露服务地址
+    address: 127.0.0.1:2181 # zookeeper 地址
   scan:
-    base-packages: com.yeguxin.dubbo.service
+    base-packages: com.yeguxin.dubbo.service # 扫描注解包通过该设置将服务注册到zookeeper
