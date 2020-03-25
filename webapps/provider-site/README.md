@@ -68,3 +68,60 @@
             }
         }
         ```
+        
+- XML配置
+    - provider.xml 示例
+        ```xml
+        <?xml version="1.0" encoding="UTF-8"?>
+        <beans xmlns="http://www.springframework.org/schema/beans"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+               xsi:schemaLocation="http://www.springframework.org/schema/beans        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd        http://dubbo.apache.org/schema/dubbo        http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+        
+            <!--服务提供方应用信息-->
+            <dubbo:application name="provider-site"/>
+        
+            <!--使用zookeeper注册中心暴露服务地址-->
+            <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
+        
+            <!-- 用dubbo协议在20880端口暴露服务 -->
+            <dubbo:protocol name="dubbo" port="20880" />
+        
+            <!-- 声明需要暴露的服务接口 -->
+            <dubbo:service interface="com.yeguxin.dubbo.service.base.ProviderService" ref="providerService" />
+        
+            <!-- 和本地bean一样实现服务 -->
+            <bean id="providerService" class="com.yeguxin.dubbo.service.impl.ProviderServiceImpl" />
+        </beans>
+        ```
+    - 启动类需要家的注解
+        - 添加@ImportResource(value = "classpath:provider.xml")注解,指定生产者,注册中心等信息
+        
+        ```java
+        package com.yeguxin.dubbo;
+        
+        import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
+        import org.springframework.boot.SpringApplication;
+        import org.springframework.boot.autoconfigure.SpringBootApplication;
+        import org.springframework.context.annotation.Configuration;
+        import org.springframework.context.annotation.ImportResource;
+        import org.springframework.context.annotation.PropertySource;
+        import org.springframework.context.support.ClassPathXmlApplicationContext;
+        import org.springframework.web.bind.annotation.RequestMapping;
+        import org.springframework.web.bind.annotation.RequestMethod;
+        import org.springframework.web.bind.annotation.RestController;
+        
+        /**
+         * @author: yeguxin
+         * @date: 2020/3/5
+         * @description:
+         */
+        @SpringBootApplication
+        @ImportResource(value = "classpath:provider.xml")
+        public class ProviderSiteApplication {
+            public static void main(String[] args) {
+                SpringApplication.run(ProviderSiteApplication.class,args);
+            }
+        }
+
+        ```

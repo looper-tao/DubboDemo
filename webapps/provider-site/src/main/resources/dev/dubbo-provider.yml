@@ -1,11 +1,11 @@
-dubbo:
-  application:
-    name: provider-site # 提供方应用信息，用于计算依赖关系
-  registry:
-    protocol: zookeeper # 使用zookeeper广播注册中心暴露服务地址
-    address: 127.0.0.1:2181 # zookeeper 地址
-  protocol:
-    name: dubbo # 用dubbo协议
-    port: 20880 # 在20880端口暴露服务
-  scan:
-    base-packages: com.yeguxin.dubbo.service #扫描注解包通过该设置将服务注册到zookeeper
+#dubbo:
+#  application:
+#    name: provider-site # 提供方应用信息，用于计算依赖关系
+#  registry:
+#    protocol: zookeeper # 使用zookeeper广播注册中心暴露服务地址
+#    address: 127.0.0.1:2181 # zookeeper 地址
+#  protocol:
+#    name: dubbo # 用dubbo协议
+#    port: 20880 # 在20880端口暴露服务
+#  scan:
+#    base-packages: com.yeguxin.dubbo.service #扫描注解包通过该设置将服务注册到zookeeper

@@ -44,3 +44,46 @@
         }
     
         ```
+- XML配置
+    - consumer.xml配置示例
+        ```xml
+         <?xml version="1.0" encoding="UTF-8"?>
+         <beans xmlns="http://www.springframework.org/schema/beans"
+                xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+                xsi:schemaLocation="http://www.springframework.org/schema/beans        http://www.springframework.org/schema/beans/spring-beans-4.3.xsd        http://dubbo.apache.org/schema/dubbo        http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+         
+         <!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+             <dubbo:application name="consumer-site"/>
+         
+             <!-- 使用zookeeper广播注册中心暴露发现服务地址 -->
+             <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
+         
+             <!-- 生成远程服务代理，可以和本地bean一样使用demoService -->
+             <dubbo:reference id="providerService" check="false" interface="com.yeguxin.dubbo.service.base.ProviderService"/>
+         </beans>
+        ```        
+    - 启动类需要添加的注解
+        - @ImportResource(value = "classpath:consumer.xml")
+        ```java
+        package com.yeguxin.dubbo;
+        
+        import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
+        import org.springframework.boot.SpringApplication;
+        import org.springframework.boot.autoconfigure.SpringBootApplication;
+        import org.springframework.context.annotation.ImportResource;
+        
+        /**
+         * @author: yeguxin
+         * @date: 2020/3/24
+         * @description:
+         */
+        @ImportResource(value = "classpath:consumer.xml")
+        @SpringBootApplication
+        public class ConsumerSiteApplication {
+            public static void main(String[] args) {
+                SpringApplication.run(ConsumerSiteApplication.class,args);
+            }
+        }
+
+        ```    
